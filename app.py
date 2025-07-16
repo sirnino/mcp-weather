@@ -3,6 +3,7 @@ import json
 from pyowm.owm import OWM
 import gradio as gr
 
+# Ref: https://pyowm.readthedocs.io/en/latest/v3/code-recipes.html#weather_data
 owm = OWM(os.getenv('OPENWEATHERMAP_APIKEY'))
 
 def current_weather(city: str) -> str:
