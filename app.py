@@ -16,8 +16,17 @@ def current_weather(city: str) -> str:
 
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(city)  # the observation object is a box containing a weather object
+    temperature = observation.weather.temperature('celsius')
+    result = {
+        'temperature': {
+                'temp': temperature['temp'],
+                'feels_like': temperature['feels_like']
+        },
+        'humidity': observation.weather.humidity,
+        'weather': observation.weather.status
+    }
 
-    return observation.weather.to_dict()
+    return json.dumps(result)
 
 # Create the Gradio interface
 demo = gr.Interface(
