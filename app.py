@@ -16,9 +16,7 @@ def current_weather(city: str) -> str:
 
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(city)  # the observation object is a box containing a weather object
-
-    weather = observation.weather
-    return json.dumps(weather)
+    return observation.to_dict()
 
 
 # Create the Gradio interface
