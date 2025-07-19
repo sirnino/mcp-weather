@@ -1,10 +1,10 @@
 import os
 import json
 from pyowm.owm import OWM
-import gradio as gr
-
 import requests
 from bs4 import BeautifulSoup, Comment
+from youtube_transcript_api import YouTubeTranscriptApi
+import gradio as gr
 
 def scrape_body(url: str, return_html: bool = False) -> str:
     """
@@ -79,9 +79,36 @@ def current_weather(city: str) -> str:
 
     return json.dumps(result)
 
+def youtube_transcript(video_id: str) -> str:
+    """
+    Fetches the transcript of a YouTube video.
+
+    Args:
+        video_id (str): The ID of the YouTube video (e.g., for
+                        "https://www.youtube.com/watch?v=abc123",
+                        video_id should be "abc123").
+
+    Returns:
+        str: The full transcript text
+
+    Throws:
+        youtube_transcript_api._errors.TranscriptsDisabled: if no subtitles are available.
+        youtube_transcript_api._errors.NoTranscriptFound: if none of the preferred languages are found.
+        youtube_transcript_api._errors.YouTubeRequestFailed or other network errors.
+
+    Usage Example:
+        get_yt_transcript("gK8N9myv40Q")
+    """
+
+    preferred_languages = ['it', 'en', 'es', 'de']
+    ytt_api = YouTubeTranscriptApi()
+    fetched_transcript = ytt_api.fetch(video_id, languages=preferred_languages)
+    return " ".join([snippet.text for snippet in fetched_transcript])
+
 with gr.Blocks() as demo:
     gr.Markdown("## This tool is MCP-only, so it does not have a UI.")
     gr.api(fn=current_weather)
     gr.api(fn=scrape_body)
+    gr.api(fn=youtube_transcript)
 
 _, url, _ = demo.launch(mcp_server=True)
