@@ -1,5 +1,4 @@
 from youtube_transcript_api import YouTubeTranscriptApi
-from pytube import YouTube
 
 def youtube_transcript(video_id: str) -> str:
     """
