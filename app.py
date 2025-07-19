@@ -94,7 +94,7 @@ def youtube_transcript(video_id: str) -> str:
     Usage Example:
         get_yt_transcript("gK8N9myv40Q")
     """
-
+    os.environ['CURL_CA_BUNDLE'] = ''
     preferred_languages = ['it', 'en', 'es', 'de']
     ytt_api = YouTubeTranscriptApi()
     fetched_transcript = ytt_api.fetch(video_id, languages=preferred_languages)
