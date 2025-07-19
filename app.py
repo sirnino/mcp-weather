@@ -115,4 +115,5 @@ with gr.Blocks() as demo:
     gr.api(fn=scrape_body)
     gr.api(fn=youtube_transcript)
 
-_, url, _ = demo.launch(mcp_server=True)
+if __name__ == "__main__":
+    demo.launch(mcp_server=True)
