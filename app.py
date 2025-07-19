@@ -79,15 +79,15 @@ def current_weather(city: str) -> str:
 
     return json.dumps(result)
 
-# Create the Gradio interface
-demo = gr.Interface(
-    fn=current_weather,
-    inputs=gr.Textbox(placeholder="Enter a city to check the weather..."),
-    outputs=gr.JSON(),
-    title="Current Weather in a city",
-    description="Get the current weather condition in a city using OpenWeatherMap"
-)
+with gr.Blocks() as demo:
+    gr.Markdown(
+        """
+        ## This tool is MCP-only, so it does not have a UI.
+        """
+    )
+    gr.api(
+        current_weather, 
+        scrape_body
+    )
 
-# Launch the interface and MCP server
-if __name__ == "__main__":
-    demo.launch(mcp_server=True)
+_, url, _ = demo.launch(mcp_server=True)
