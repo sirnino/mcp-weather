@@ -91,11 +91,6 @@ def youtube_transcript(video_id: str) -> str:
     Returns:
         str: The full transcript text
 
-    Throws:
-        youtube_transcript_api._errors.TranscriptsDisabled: if no subtitles are available.
-        youtube_transcript_api._errors.NoTranscriptFound: if none of the preferred languages are found.
-        youtube_transcript_api._errors.YouTubeRequestFailed or other network errors.
-
     Usage Example:
         get_yt_transcript("gK8N9myv40Q")
     """
@@ -105,8 +100,17 @@ def youtube_transcript(video_id: str) -> str:
     fetched_transcript = ytt_api.fetch(video_id, languages=preferred_languages)
     return " ".join([snippet.text for snippet in fetched_transcript])
 
+# Create the Gradio interface
+demo = gr.Interface(
+    fn=youtube_transcript,
+    inputs=gr.Textbox(placeholder="Enter a youtube link"),
+    outputs=gr.TextArea(),
+    title="Video Transcript",
+    description="Fetch the transcript of a youtube video"
+)
+
 with gr.Blocks() as demo:
-    gr.Markdown("## This tool is MCP-only, so it does not have a UI.")
+   # gr.Markdown("## This tool is MCP-only, so it does not have a UI.")
     gr.api(fn=current_weather)
     gr.api(fn=scrape_body)
     gr.api(fn=youtube_transcript)
