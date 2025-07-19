@@ -80,14 +80,8 @@ def current_weather(city: str) -> str:
     return json.dumps(result)
 
 with gr.Blocks() as demo:
-    gr.Markdown(
-        """
-        ## This tool is MCP-only, so it does not have a UI.
-        """
-    )
-    gr.api(
-        current_weather, 
-        scrape_body
-    )
+    gr.Markdown("## This tool is MCP-only, so it does not have a UI.")
+    gr.api(fn=current_weather)
+    gr.api(fn=scrape_body)
 
 _, url, _ = demo.launch(mcp_server=True)
