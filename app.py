@@ -109,11 +109,11 @@ demo = gr.Interface(
     description="Fetch the transcript of a youtube video"
 )
 
-with gr.Blocks() as demo:
-   # gr.Markdown("## This tool is MCP-only, so it does not have a UI.")
-    gr.api(fn=current_weather)
-    gr.api(fn=scrape_body)
-    gr.api(fn=youtube_transcript)
+# with gr.Blocks() as demo:
+   # gr.Markdown("## This tool is MCP-only, so it does not have a UI.") 
+#    gr.api(fn=current_weather)
+#    gr.api(fn=scrape_body)
+#    gr.api(fn=youtube_transcript)
 
 if __name__ == "__main__":
     demo.launch(mcp_server=True)
